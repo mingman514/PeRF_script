@@ -22,10 +22,10 @@ mkdir $LOG_PATH
 trap stop_program INT
 #--------------------------------------
 
-MTU_LIST=(1024) #2048 4096)
+MTU_LIST=(1024 2048 4096)
 OP_LIST=("write")
-MSG_SIZE=( 1048576 1073741824 )
-#MSG_SIZE=(0 256 512 1024 2048 4096 8192 16384 1048576 1073741824)
+#MSG_SIZE=( 1048576 1073741824 )
+MSG_SIZE=(0 256 512 1024 2048 4096 8192 16384 1048576 1073741824)
 
 for MTU in ${MTU_LIST[@]}
 do
@@ -36,11 +36,11 @@ do
     reset_pids
 
     if [ $SIZE -le 1048576 ]; then 
-      if [ $SIZE -le 1024 ]; then
-        run_bw.sh $OP 1 "-m $MTU -s $SIZE -l 32" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
-      else
+    #  if [ $SIZE -le 1024 ]; then
+    #    run_bw.sh $OP 1 "-m $MTU -s $SIZE -l 32" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
+    #  else
         run_bw.sh $OP 1 "-m $MTU -s $SIZE" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
-      fi
+    #  fi
       sleep 5
     else
       run_bw_1GB.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"

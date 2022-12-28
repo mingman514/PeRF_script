@@ -29,7 +29,7 @@ for MTU in ${MTU_LIST[@]}
 do
   for OP in ${OP_LIST[@]}
   do
-    for (( TX=1; TX <= 32 ; TX*=2 ));
+    for (( TX=1; TX <= 6 ; TX++ ));
     do
       reset_pids
   

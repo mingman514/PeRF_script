@@ -1,12 +1,16 @@
 # EX) ./run_msg.sh write 3
 
+source ./config.sh
+
 TYPE=$1
 ITER=$2
 PORT=9000
 
-sleep 0.3
+if [ $IS_CLIENT -eq 1 ];then
+  sleep 0.3
+fi
 
-CMD="$BASE_DIR/bin/ib_${TYPE}_bw -d mlx5_0 -F --run_infinitely -D 2 -l 32 -s 16 -p $PORT $SERVER_IP -q $ITER --report_gbits $3"
+CMD="$BASE_DIR/bin/ib_${TYPE}_bw -d ${DEV} -F --run_infinitely -D 2 -l 32 -s 16 -p $PORT $SERVER_IP -q $ITER --report_gbits $3"
 
 if [ "$ITER" -ge 2 ]
 then
@@ -15,4 +19,7 @@ fi
 
 echo $CMD
 $CMD & echo $! >> pids
-#sleep 0.3
+
+if [ $IS_CLIENT -eq 0 ];then
+  sleep 0.3
+fi
