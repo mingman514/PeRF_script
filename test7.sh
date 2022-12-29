@@ -24,13 +24,25 @@ trap stop_program INT
 #--------------------------------------
 
 MTU_LIST=(4096)
-OP_LIST=("write" "send" "read")
+OP_LIST=("write")
+QP_LIST=(1 4 8 12 16 20 24)
 
 for MTU in ${MTU_LIST[@]}
 do
   for OP in ${OP_LIST[@]}
   do
-    for (( QP_NUM=1; QP_NUM <= 32 ; QP_NUM*=2 ));
+
+    reset_pids
+    # Alone Flow
+    run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0__msg"
+    sleep 7
+    kill_all
+
+    run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0_lat"
+  
+
+    #for (( QP_NUM=1; QP_NUM <= 32 ; QP_NUM*=2 ));
+    for QP_NUM in ${QP_LIST[@]}
     do
 
     reset_pids
