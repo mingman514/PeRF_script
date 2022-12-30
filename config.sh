@@ -4,5 +4,5 @@ export IS_CLIENT=1
 export DEV=mlx5_0
 
 if [ $IS_CLIENT -eq 0 ];then
-  SERVER_IP=""
-fi 
+  unset SERVER_IP
+fi

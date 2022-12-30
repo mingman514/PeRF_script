@@ -39,7 +39,5 @@ kill_nth_process(){
   do
     arr+=("$p")
   done
-  
-  echo "Kill process #$1"
   sudo kill -TERM ${arr["$1"]}
 }
