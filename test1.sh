@@ -22,6 +22,7 @@ trap stop_program INT
 #--------------------------------------
 
 MTU_LIST=(4096)
+#OP_LIST=("write")
 OP_LIST=("write" "send" "read")
 
 for MTU in ${MTU_LIST[@]}
@@ -57,6 +58,7 @@ do
   sleep 15
 
   kill_all
+  reset_pids
 
   ## 2. Run BW & Lat
   run_bw.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_competed_bw2"

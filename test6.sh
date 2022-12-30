@@ -38,7 +38,7 @@ do
     run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_single"
     sleep 2
     run_msg.sh $OP $QP_NUM "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_multi"
-    sleep 10
+    sleep 16
   
     kill_all
 

@@ -22,7 +22,7 @@ kill_all() {
   echo -e "Kill all:\n${PIDS[*]}"
   for p in ${PIDS[@]}
   do
-    sudo kill -9 $p 2> /dev/null
+    sudo kill -TERM $p 2> /dev/null
   done  
   sleep 2
 }
@@ -39,6 +39,7 @@ kill_nth_process(){
   do
     arr+=("$p")
   done
-    
-  sudo kill -9 ${arr["$1"]}
+  
+  echo "Kill process #$1"
+  sudo kill -TERM ${arr["$1"]}
 }

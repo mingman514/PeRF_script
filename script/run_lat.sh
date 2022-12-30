@@ -8,7 +8,8 @@ if [ $IS_CLIENT -eq 1 ];then
   sleep 0.3
 fi
 
-CMD="sudo taskset -c 3 $BASE_DIR/bin/ib_${TYPE}_lat -d ${DEV} -F -s 16 -n 5000000 -p ${PORT} $SERVER_IP $2"
+CMD="$BASE_DIR/bin/ib_${TYPE}_lat -d ${DEV} -F -s 16 -n 5000000 -p ${PORT} $SERVER_IP $2"
+#CMD="sudo taskset -c 3 $BASE_DIR/bin/ib_${TYPE}_lat -d ${DEV} -F -s 16 -n 5000000 -p ${PORT} $SERVER_IP $2"
 echo $CMD
 $CMD
 #$CMD & echo $! >> /tmp/pids
