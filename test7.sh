@@ -34,7 +34,7 @@ do
 
     reset_pids
     # Alone Flow
-    run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0__msg"
+    run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0_msg"
     sleep 7
     kill_all
 
