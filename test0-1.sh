@@ -38,14 +38,10 @@ do
     reset_pids
 
     if [ $SIZE -le 1048576 ]; then 
-    #  if [ $SIZE -le 1024 ]; then
-    #    run_bw.sh $OP 1 "-m $MTU -s $SIZE -l 32" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
-    #  else
-        run_bw.sh $OP 1 "-m $MTU -s $SIZE" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
-    #  fi
+        run_bw.sh $OP 1 "-m $MTU -s $SIZE -l 64 -t 512" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
       sleep 5
     else
-      run_bw_1GB.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
+      run_bw_1GB.sh $OP 1 "-m $MTU -l 64 -t 512" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
       sleep 20
     fi
     
