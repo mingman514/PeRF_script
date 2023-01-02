@@ -19,6 +19,10 @@ if [ -d $LOG_PATH ]; then
 fi
 mkdir $LOG_PATH
 
+if [[ -z $LAT_TEST_ITER ]];then
+  LAT_TEST_ITER=1
+fi
+echo "LAT ITER: $LAT_TEST_ITER times"
 
 trap stop_program INT
 #--------------------------------------
@@ -38,7 +42,11 @@ do
     sleep 7
     kill_all
 
-    run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0_lat"
+    for (( i=0; i<$LAT_TEST_ITER; i++));
+    do 
+      run_lat.sh $OP "-m $MTU" >> "$LOG_PATH/${OP}_${MTU}_0_lat"
+      sleep 1
+    done
   
 
     #for (( QP_NUM=1; QP_NUM <= 32 ; QP_NUM*=2 ));
@@ -49,7 +57,12 @@ do
  
     run_msg.sh $OP $QP_NUM "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
     sleep 5
-    run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
+
+    for (( i=0; i<$LAT_TEST_ITER; i++));
+    do 
+      run_lat.sh $OP "-m $MTU" >> "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
+      sleep 1
+    done
   
     kill_all
 
