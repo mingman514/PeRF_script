@@ -6,9 +6,10 @@ source ./utils.sh
 source ./config.sh
 export BASE_DIR=$(pwd)
 export PATH=$PATH:$(pwd)/script
+export PATH=$PATH:$(pwd)/bin
 
 #export SERVER_IP=10.0.102.2
-echo "Server IP: $SERVER_IP"
+echo "Server IP: $SERV_IP"
 
 # log file format: ${TEST_NAME}_${TIMESTAMP}
 
@@ -32,6 +33,7 @@ OP_LIST=("write")
 #MSG_SIZE=(4096 1048576)
 MSG_SIZE=(0 256 512 1024 2048 4096 8192 16384 1048576 1073741824)
 
+run_pacer
 
 for MTU in ${MTU_LIST[@]}
 do

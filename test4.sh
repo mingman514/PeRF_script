@@ -4,8 +4,9 @@ source ./utils.sh
 source ./config.sh
 export BASE_DIR=$(pwd)
 export PATH=$PATH:$(pwd)/script
+export PATH=$PATH:$(pwd)/bin
 #export SERVER_IP=10.0.102.2
-echo "Server IP: $SERVER_IP"
+echo "Server IP: $SERV_IP"
 
 
 # log file format: ${TEST_NAME}_${TIMESTAMP}
@@ -24,6 +25,8 @@ echo "LAT ITER: $LAT_TEST_ITER times"
 
 trap stop_program INT
 #--------------------------------------
+
+run_pacer
 
 MTU_LIST=(1024 2048 4096)
 OP_LIST=("write")
