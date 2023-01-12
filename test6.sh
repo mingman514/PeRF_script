@@ -28,12 +28,14 @@ run_pacer
 
 MTU_LIST=(4096)
 OP_LIST=("write")
+QP_LIST=(1 4 8 12 16 20 24)
 
 for MTU in ${MTU_LIST[@]}
 do
   for OP in ${OP_LIST[@]}
   do
-    for (( QP_NUM=1; QP_NUM <= 128 ; QP_NUM*=2 ));
+    #for (( QP_NUM=1; QP_NUM <= 128 ; QP_NUM*=2 ));
+    for QP_NUM in ${QP_LIST[@]}
     do
 
     reset_pids
@@ -41,7 +43,7 @@ do
     run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_single"
     sleep 2
     run_msg.sh $OP $QP_NUM "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_multi"
-    sleep 16
+    sleep 20
   
     kill_all
 

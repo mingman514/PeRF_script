@@ -39,11 +39,12 @@ do
       ###################
       # POLLING
       ###################
-      run_bw.sh $OP 1 "-m $MTU -t $TX" > "$LOG_PATH/${OP}_${MTU}_${TX}_1MB"
-      sleep 10
-  
       run_bw_1GB.sh $OP 1 "-m $MTU -t $TX" > "$LOG_PATH/${OP}_${MTU}_${TX}_1GB"
-      sleep 20
+      sleep 2
+
+      run_bw.sh $OP 1 "-m $MTU -t $TX" > "$LOG_PATH/${OP}_${MTU}_${TX}_1MB"
+      sleep 40
+
       kill_all
   
 #      reset_pids

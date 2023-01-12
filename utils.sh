@@ -1,6 +1,6 @@
 stop_program(){
   kill_all 
-  pkill pacer
+  sudo pkill pacer
   exit 0
 }
 
@@ -10,7 +10,7 @@ rename_log_folder(){
   mv $1 $1/../$2_$timestamp
   echo "log folder: $2_$timestamp"
 
-  pkill pacer
+  sudo pkill pacer
 }
 
 
@@ -50,15 +50,14 @@ run_pacer() {
   if [ -v LD_LIBRARY_PATH ]; then
     echo "<< Justitia Mode Enabled >>"
     PID=$(pidof pacer)
-    echo PID is $PID
     if [ -n "$PID" ]; then
       echo Kill current pacer.
-      pkill pacer
+      sudo pkill pacer
     fi
 
-    echo @@@@ run pacer!
+    echo "@@@@ run pacer! (PID: $PID)"
     #echo env LD_LIBRARY_PATH="" pacer $IS_CLIENT $SERV_IP 1 5 &
-    env LD_LIBRARY_PATH="" pacer $IS_CLIENT $SERV_IP 1 5 &
+    sudo taskset -c 0 ./bin/pacer $IS_CLIENT $SERV_IP 1 5 &
     sleep 3 
   fi
 }
