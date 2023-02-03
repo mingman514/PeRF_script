@@ -7,9 +7,9 @@ source ./utils.sh
 source ./config.sh
 export BASE_DIR=$(pwd)
 export PATH=$PATH:$(pwd)/script
+export PATH=$PATH:$(pwd)/bin
 #export SERVER_IP=10.0.102.2
-echo "Server IP: $SERVER_IP"
-
+echo "Server IP: $SERV_IP"
 
 # log file format: ${TEST_NAME}_${TIMESTAMP}
 
@@ -19,9 +19,15 @@ if [ -d $LOG_PATH ]; then
 fi
 mkdir $LOG_PATH
 
+if [[ -z $LAT_TEST_ITER ]];then
+  LAT_TEST_ITER=1
+fi
+echo "LAT ITER: $LAT_TEST_ITER times"
 
 trap stop_program INT
 #--------------------------------------
+
+run_pacer
 
 MTU_LIST=(4096)
 OP_LIST=("write")
@@ -34,11 +40,15 @@ do
 
     reset_pids
     # Alone Flow
-    run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0_msg"
+    run_msg.sh $OP 1 "-m $MTU" $(($CORE_START+1)) 1 > "$LOG_PATH/${OP}_${MTU}_0_msg"
     sleep 7
     kill_all
 
-    run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_0_lat"
+    for (( i=0; i<$LAT_TEST_ITER; i++));
+    do 
+      run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_0_lat"
+      sleep 1
+    done
   
 
     #for (( QP_NUM=1; QP_NUM <= 32 ; QP_NUM*=2 ));
@@ -47,9 +57,14 @@ do
 
     reset_pids
  
-    run_msg.sh $OP $QP_NUM "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
+    run_msg.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $QP_NUM > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
     sleep 5
-    run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
+
+    for (( i=0; i<$LAT_TEST_ITER; i++));
+    do 
+      run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
+      sleep 1
+    done
   
     kill_all
 

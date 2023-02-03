@@ -6,9 +6,10 @@ source ./utils.sh
 source ./config.sh
 export BASE_DIR=$(pwd)
 export PATH=$PATH:$(pwd)/script
+export PATH=$PATH:$(pwd)/bin
 
 #export SERVER_IP=10.0.102.2
-echo "Server IP: $SERVER_IP"
+echo "Server IP: $SERV_IP"
 
 # log file format: ${TEST_NAME}_${TIMESTAMP}
 
@@ -18,6 +19,10 @@ if [ -d $LOG_PATH ]; then
 fi
 mkdir $LOG_PATH
 
+if [[ -z $LAT_TEST_ITER ]];then
+  LAT_TEST_ITER=1
+fi
+echo "LAT ITER: $LAT_TEST_ITER times"
 
 trap stop_program INT
 #--------------------------------------
@@ -28,6 +33,7 @@ OP_LIST=("write")
 #MSG_SIZE=(4096 1048576)
 MSG_SIZE=(0 256 512 1024 2048 4096 8192 16384 1048576 1073741824)
 
+run_pacer
 
 for MTU in ${MTU_LIST[@]}
 do
@@ -43,15 +49,18 @@ do
     #  else
         run_bw.sh $OP 1 "-m $MTU -s $SIZE -l 64 -t 512" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
     #  fi
-      sleep 5
+      sleep 20
     else
       run_bw_1GB.sh $OP 1 "-m $MTU -l 64 -t 512" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_bw"
-      sleep 20
+      sleep 30
     fi
     
-    
-    run_lat.sh $OP "-m $MTU -n 1000000" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_lat"
-    sleep 3
+    for (( i=0; i<$LAT_TEST_ITER; i++));
+    do 
+      run_lat.sh $OP "-m $MTU -n 1000000" >> "$LOG_PATH/${OP}_${MTU}_${SIZE}_lat"
+      sleep 1
+    done
+
 
     run_msg.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_${SIZE}_msg"
     sleep 10

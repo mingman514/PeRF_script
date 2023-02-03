@@ -4,8 +4,9 @@ source ./utils.sh
 source ./config.sh
 export BASE_DIR=$(pwd)
 export PATH=$PATH:$(pwd)/script
+export PATH=$PATH:$(pwd)/bin
 #export SERVER_IP=10.0.102.2
-echo "Server IP: $SERVER_IP"
+echo "Server IP: $SERV_IP"
 
 
 # log file format: ${TEST_NAME}_${TIMESTAMP}
@@ -17,13 +18,22 @@ if [ -d $LOG_PATH ]; then
 fi
 mkdir $LOG_PATH
 
+if [[ -z $LAT_TEST_ITER ]];then
+  LAT_TEST_ITER=1
+fi
+echo "LAT ITER: $LAT_TEST_ITER times"
 
 trap stop_program INT
 #--------------------------------------
 
 MTU_LIST=(4096)
-#OP_LIST=("write")
-OP_LIST=("write" "send" "read")
+if [ $MODE -eq 1 ]; then
+  OP_LIST=("write")
+else
+  OP_LIST=("write" "send" "read")
+fi
+
+run_pacer
 
 for MTU in ${MTU_LIST[@]}
 do
@@ -45,7 +55,11 @@ do
   kill_nth_process 1
 
   ## 3. Run Lat
-  run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_alone_lat"
+  for (( i=0; i<$LAT_TEST_ITER; i++));
+  do 
+    run_lat.sh $OP "-m $MTU" >> "$LOG_PATH/${OP}_${MTU}_alone_lat"
+    sleep 1
+  done
  
   
   # COMPETED
@@ -63,7 +77,11 @@ do
   ## 2. Run BW & Lat
   run_bw.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_competed_bw2"
   sleep 2
-  run_lat.sh $OP "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_competed_lat"
+  for (( i=0; i<$LAT_TEST_ITER; i++));
+  do 
+    run_lat.sh $OP "-m $MTU" >> "$LOG_PATH/${OP}_${MTU}_competed_lat"
+    sleep 1
+  done
 
   kill_all
   done

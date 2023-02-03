@@ -7,8 +7,9 @@ source ./utils.sh
 source ./config.sh
 export BASE_DIR=$(pwd)
 export PATH=$PATH:$(pwd)/script
+export PATH=$PATH:$(pwd)/bin
 #export SERVER_IP=10.0.102.2
-echo "Server IP: $SERVER_IP"
+echo "Server IP: $SERV_IP"
 
 # log file format: ${TEST_NAME}_${TIMESTAMP}
 
@@ -21,6 +22,8 @@ mkdir $LOG_PATH
 
 trap stop_program INT
 #--------------------------------------
+
+run_pacer
 
 MTU_LIST=(4096)
 OP_LIST=("write")
@@ -36,11 +39,12 @@ do
       ###################
       # POLLING
       ###################
-      run_bw.sh $OP 1 "-m $MTU -t $TX" > "$LOG_PATH/${OP}_${MTU}_${TX}_1MB"
-      sleep 10
-  
       run_bw_1GB.sh $OP 1 "-m $MTU -t $TX" > "$LOG_PATH/${OP}_${MTU}_${TX}_1GB"
-      sleep 20
+      sleep 2
+
+      run_bw.sh $OP 1 "-m $MTU -t $TX" > "$LOG_PATH/${OP}_${MTU}_${TX}_1MB"
+      sleep 40
+
       kill_all
   
 #      reset_pids
