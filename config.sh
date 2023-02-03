@@ -66,6 +66,8 @@ sleep 1
 # SERVER-CLIENT
 SERV_IP=$SERVER_IP  # For justitia pacer
 
+SERV_IP=$SERVER_IP  # For justitia pacer
+
 if [ $IS_CLIENT -eq 0 ];then
   unset SERVER_IP
 fi
