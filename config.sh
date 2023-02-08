@@ -4,7 +4,7 @@ export SERVER_IP=10.0.103.2
 export IS_CLIENT=1
 #export IS_CLIENT=0
 export DEV=mlx5_0
-export MODE=1 # Default: 0  Justitia: 1  PERF: 2
+export MODE=0 # Default: 0  Justitia: 1  PERF: 2
 
 
 
