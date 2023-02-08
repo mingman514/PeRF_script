@@ -11,10 +11,10 @@ fi
 
 CMD="$BASE_DIR/bin/ib_${TYPE}_bw -d ${DEV} -F --run_infinitely -D 2 -s 1048576 -p $PORT $SERVER_IP -q $ITER --report_gbits $3"
 
-if [ "$ITER" -ge 2 ]
-then
-  CMD+=" --thrd_per_qp --qps_in_thrd 2"
-fi
+#if [ "$ITER" -ge 2 ]
+#then
+#  CMD+=" --thrd_per_qp --qps_in_thrd 2"
+#fi
 
 # TASKSET
 if [ $# -eq 5 ]; then

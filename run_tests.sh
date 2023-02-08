@@ -1,8 +1,7 @@
-
+source ./config.sh
 # if the variable is defined,
-if [ -v LD_LIBRARY_PATH  ];
+if [ $MODE -gt 0 ];
 then
-
   # For Justitia
   echo "TEST START: Justitia/PERF version"
   ./test0-1.sh
@@ -22,5 +21,13 @@ else
   done
 fi
 
-
-
+if [ $IS_CLIENT -eq 1 ]; then
+  if [ $MODE -eq 0 ]; then
+    TEST_T="DEFAULT"
+  elif [ $MODE -eq 1 ]; then
+    TEST_T="JUSTITIA"
+  elif [ $MODE -eq 2 ]; then
+    TEST_T="PERF"
+  fi 
+  echo "$TEST_t TEST is DONE." | mail -s "$TEST_T TEST is done!" mingyu514@g.skku.edu
+fi

@@ -13,7 +13,8 @@ CMD="$BASE_DIR/bin/ib_${TYPE}_bw -d ${DEV} -F --run_infinitely -D 2 -l 32 -s 16 
 
 if [ "$ITER" -ge 2 ]
 then
-  CMD+=" --thrd_per_qp --qps_in_thrd 2"
+  CMD+=" --thrd_per_qp"
+  #CMD+=" --thrd_per_qp --qps_in_thrd 2 -t 1024"
 fi
 
 # TASKSET

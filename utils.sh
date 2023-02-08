@@ -59,7 +59,7 @@ run_pacer() {
     fi
 
     echo "@@@@ run pacer! (PID: $PID)"
-    LD_LIBRARY_PATH="" taskset -c 0 ./bin/pacer $IS_CLIENT $SERV_IP 1 5 &
+    LD_LIBRARY_PATH="" taskset -c 0 ../Justitia/rdma_pacer/pacer $IS_CLIENT $SERV_IP 1 5 &
     sleep 3 
 
   elif [[ $PERF_ENABLE -eq 1 ]]; then

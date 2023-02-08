@@ -4,7 +4,7 @@ export SERVER_IP=10.0.103.2
 export IS_CLIENT=1
 #export IS_CLIENT=0
 export DEV=mlx5_0
-export MODE=0 # Default: 0  Justitia: 1  PERF: 2
+export MODE=1 # Default: 0  Justitia: 1  PERF: 2
 
 
 
@@ -26,7 +26,7 @@ unset \
 
 if [ $MODE -eq 1 ]; then
   # Justitia
-  export LD_LIBRARY_PATH=/usr/lib64:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=/usr/lib64
   echo "<<<<<< JUSTITIA ENV >>>>>>"
   echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
@@ -64,8 +64,6 @@ sleep 1
 
 
 # SERVER-CLIENT
-SERV_IP=$SERVER_IP  # For justitia pacer
-
 SERV_IP=$SERVER_IP  # For justitia pacer
 
 if [ $IS_CLIENT -eq 0 ];then
