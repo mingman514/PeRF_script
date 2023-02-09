@@ -27,10 +27,10 @@ trap stop_program INT
 #--------------------------------------
 
 MTU_LIST=(4096)
-if [ $MODE -eq 1 ]; then
-  OP_LIST=("write")
-else
+if [ $MODE -eq 0 ]; then
   OP_LIST=("write" "send" "read")
+else
+  OP_LIST=("write")
 fi
 
 run_pacer

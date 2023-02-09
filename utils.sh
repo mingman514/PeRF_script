@@ -73,7 +73,7 @@ run_pacer() {
     fi
 
     echo "@@@@ run perf_main! (PID: $PID)"
-    PERF_NIC_LINK_BW=100000 PERF_NIC_MSG_RATE=12400  PERF_NIC_QPS_CAPA=8 taskset -c 0 ./bin/perf_main &
+    PERF_NIC_LINK_BW=100000 PERF_NIC_MSG_RATE=12400  PERF_NIC_QPS_CAPA=9 taskset -c 0 ./bin/perf_main &
     sleep 3
    
   fi
