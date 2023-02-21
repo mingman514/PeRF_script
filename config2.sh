@@ -1,8 +1,8 @@
 export BASE_DIR=$(pwd)
 export LAT_TEST_ITER=1
-export SERVER_IP=10.0.103.2
-export IS_CLIENT=1
-#export IS_CLIENT=0
+export SERVER_IP=10.0.104.2
+#export IS_CLIENT=1
+export IS_CLIENT=0
 export DEV=mlx5_0
 export MODE=2 # Default: 0  Justitia: 1  PERF: 2
 

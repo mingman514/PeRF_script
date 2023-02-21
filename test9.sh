@@ -41,7 +41,7 @@ do
     reset_pids
  
     run_msg.sh $OP 1 "-m $MTU" $CORE_START 1 > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
-    sleep 7
+    sleep 10
     run_bw.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $QP_NUM > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_bw"
     sleep 30
   

@@ -5,7 +5,7 @@ then
   # For Justitia
   echo "TEST START: Justitia/PERF version"
   ./test0-1.sh
-  for ((var=1; var<=8; var++))
+  for ((var=1; var<=9; var++))
   do
     echo "TEST #$var START"
     ./test$var.sh
@@ -14,7 +14,7 @@ then
 else
   # For Default App
   echo "TEST START: Default version"
-  for ((var=0; var<=8; var++))
+  for ((var=0; var<=9; var++))
   do
     echo "TEST #$var START"
     ./test$var.sh

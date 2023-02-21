@@ -38,13 +38,17 @@ do
     for QP_NUM in ${QP_LIST[@]}
     do
 
-    reset_pids
- 
-    run_msg.sh $OP 1 "-m $MTU" $CORE_START 1 > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_single"
-    sleep 2
-    run_msg.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $QP_NUM > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_multi"
-    sleep 40
-  
+      reset_pids
+
+      run_msg.sh $OP 1 "-m $MTU" $CORE_START 1 > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_single"
+      sleep 2
+      if [ $QP_NUM -lt 10 ]; then
+        run_msg.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $(($QP_NUM+1)) > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_multi"
+      else
+        run_msg.sh $OP $QP_NUM "-m $MTU --qps_in_thrd 0" $(($CORE_START+1)) $(($QP_NUM+1)) > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_multi"
+      fi
+      sleep 40
+
     kill_all
 
 

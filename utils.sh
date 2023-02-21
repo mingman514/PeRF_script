@@ -34,6 +34,7 @@ kill_all() {
 
 kill_process() {
   echo "Kill $1"
+  sudo kill -TERM $1
 }
 
 kill_nth_process(){

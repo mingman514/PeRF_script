@@ -37,38 +37,25 @@ for MTU in ${MTU_LIST[@]}
 do
   for OP in ${OP_LIST[@]}
   do
-
-    reset_pids
-    # Alone Flow
-    run_msg.sh $OP 1 "-m $MTU" $(($CORE_START+1)) 1 > "$LOG_PATH/${OP}_${MTU}_0_msg"
-    sleep 7
-    kill_all
-
-    for (( i=0; i<$LAT_TEST_ITER; i++));
-    do 
-      run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_0_lat"
-      sleep 1
-    done
-  
-
     #for (( QP_NUM=1; QP_NUM <= 32 ; QP_NUM*=2 ));
     for QP_NUM in ${QP_LIST[@]}
     do
 
-    reset_pids
- 
-    run_msg.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $QP_NUM > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
-    sleep 5
+      reset_pids
+      if [ $QP_NUM -lt 10 ]; then
+        run_msg.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $(($QP_NUM+1)) > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
+      else
+        run_msg.sh $OP $QP_NUM "-m $MTU --qps_in_thrd 0" $(($CORE_START+1)) $(($QP_NUM+1)) > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
+      fi
+      sleep 5
 
-    for (( i=0; i<$LAT_TEST_ITER; i++));
-    do 
-      run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
-      sleep 1
-    done
+      for (( i=0; i<$LAT_TEST_ITER; i++));
+      do 
+        run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
+        sleep 1
+      done
   
-    kill_all
-
-
+      kill_all
     done
   done
 done

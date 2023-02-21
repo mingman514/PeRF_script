@@ -73,6 +73,7 @@ do
 
   kill_all
   reset_pids
+  run_pacer
 
   ## 2. Run BW & Lat
   run_bw.sh $OP 1 "-m $MTU" > "$LOG_PATH/${OP}_${MTU}_competed_bw2"
