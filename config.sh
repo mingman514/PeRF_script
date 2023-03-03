@@ -9,10 +9,10 @@ export MODE=2 # Default: 0  Justitia: 1  PERF: 2
 
 
 # TASKSET
-export MAX_CORE=16
-export CORE_START=0
+export MAX_CORE=6 # start from 0
+export CORE_START=2
 if [ $MODE -gt 0 ]; then
-  export CORE_START=1
+  export MAX_CORE=$(($MAX_CORE+1))
 fi
 
 

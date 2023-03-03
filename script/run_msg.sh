@@ -25,10 +25,10 @@ if [ $# -eq 5 ]; then
   echo "Last Core will be $END_CORE"
   echo "MAX_CORE= $MAX_CORE"
 
-  if [ $(($MAX_CORE-1)) -eq $4 ] || [ $END_CORE -eq $4 ]; then
+  if [ $MAX_CORE -eq $4 ] || [ $END_CORE -eq $4 ]; then
     CMD="$CMD --core_pinning=$4"
-  elif [ $END_CORE -ge $(($MAX_CORE-1)) ]; then
-    CMD="$CMD --core_pinning=$4-$(($MAX_CORE-1))"
+  elif [ $END_CORE -ge $MAX_CORE ]; then
+    CMD="$CMD --core_pinning=$4-$MAX_CORE"
   else
     CMD="$CMD --core_pinning=$4-$END_CORE"
   fi

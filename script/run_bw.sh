@@ -18,18 +18,18 @@ CMD="$BASE_DIR/bin/ib_${TYPE}_bw -d ${DEV} -F --run_infinitely -D 2 -s 1048576 -
 
 # TASKSET
 if [ $# -eq 5 ]; then
-  echo "TASKSET ENABLED!"
+  echo "CORE PINNING ENABLED!"
 
   END_CORE=$(($4+$5-1))
   echo "Last Core will be $END_CORE"
   echo "MAX_CORE= $MAX_CORE"
 
-  if [ $(($MAX_CORE-1)) -eq $4 ] || [ $END_CORE -eq $4 ]; then
-    CMD="taskset -c $4 $CMD"
-  elif [ $END_CORE -ge $(($MAX_CORE-1)) ]; then
-    CMD="taskset -c $4-$(($MAX_CORE-1)) $CMD"
+  if [ $MAX_CORE -eq $4 ] || [ $END_CORE -eq $4 ]; then
+    CMD="$CMD --core_pinning=$4"
+  elif [ $END_CORE -ge $MAX_CORE ]; then
+    CMD="$CMD --core_pinning=$4-$MAX_CORE"
   else
-    CMD="taskset -c $4-$END_CORE $CMD"
+    CMD="$CMD --core_pinning=$4-$END_CORE"
   fi
 fi
 

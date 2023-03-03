@@ -1,5 +1,6 @@
 source ./config.sh
 test_ver=(1 2 3 4 5 6 7 8 9)
+test_ver=(3 5 6 7 8 9)  # Multi Tests
 
 
 ./update_bin.sh

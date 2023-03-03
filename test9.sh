@@ -28,7 +28,7 @@ run_pacer
 
 MTU_LIST=(4096)
 OP_LIST=("write")
-QP_LIST=(1 4 8 12 16 20 24)
+QP_LIST=(1 5 10 15 20 25)
 
 for MTU in ${MTU_LIST[@]}
 do
@@ -40,9 +40,9 @@ do
 
     reset_pids
  
-    run_msg.sh $OP 1 "-m $MTU" $CORE_START 1 > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
-    sleep 10
     run_bw.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $QP_NUM > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_bw"
+    sleep 4
+    run_msg.sh $OP 1 "-m $MTU" $CORE_START 1 > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
     sleep 30
   
     kill_all

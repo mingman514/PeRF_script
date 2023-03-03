@@ -7,7 +7,7 @@ TYPE="bw"   # msg or bw
 PORT=9000
 READ_PORT=2011
 
-./script/run_$TYPE.sh write 1 "-s 16" 2 $(($MAX_CORE-1)) &
+./script/run_$TYPE.sh write 1 "" 2 $(($MAX_CORE-1)) &
 echo
 echo "<<<< APP Num: 1 >>>>"
 read input
@@ -18,7 +18,7 @@ do
 
   for (( i=0; i<$APP_NUM; i++));
   do
-    PERF_READ_PORT=$READ_PORT ./script/run_$TYPE.sh write 1 "-s 16 -p $PORT" 2 $(($MAX_CORE-1)) > /dev/null &
+    PERF_READ_PORT=$READ_PORT ./script/run_$TYPE.sh write 1 "-p $PORT" 2 $(($MAX_CORE-1)) > /dev/null &
     READ_PORT=$(($READ_PORT+5))
     if [ $READ_PORT -gt 10000 ]; then
       READ_PORT=2011

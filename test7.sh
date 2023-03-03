@@ -31,7 +31,7 @@ run_pacer
 
 MTU_LIST=(4096)
 OP_LIST=("write")
-QP_LIST=(1 4 8 12 16 20 24)
+QP_LIST=(1 5 10 15 20 25)
 
 for MTU in ${MTU_LIST[@]}
 do
@@ -42,7 +42,7 @@ do
     do
 
       reset_pids
-      if [ $QP_NUM -lt 10 ]; then
+      if [ $QP_NUM -le 5 ]; then
         run_msg.sh $OP $QP_NUM "-m $MTU" $(($CORE_START+1)) $(($QP_NUM+1)) > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
       else
         run_msg.sh $OP $QP_NUM "-m $MTU --qps_in_thrd 0" $(($CORE_START+1)) $(($QP_NUM+1)) > "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_msg"
