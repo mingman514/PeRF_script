@@ -60,7 +60,7 @@ run_pacer() {
     fi
 
     echo "@@@@ run pacer! (PID: $PID)"
-    LD_LIBRARY_PATH="" taskset -c 0 ../Justitia/rdma_pacer/pacer $IS_CLIENT $SERV_IP 1 5 &
+    LD_LIBRARY_PATH="" taskset -c 0 ../perf/Justitia/rdma_pacer/pacer $IS_CLIENT $SERV_IP 1 5 &
     sleep 3 
 
   elif [[ $PERF_ENABLE -eq 1 ]]; then
@@ -74,7 +74,7 @@ run_pacer() {
     fi
 
     echo "@@@@ run perf_main! (PID: $PID)"
-    PERF_NIC_LINK_BW=100000 PERF_NIC_MSG_RATE=12400  PERF_NIC_QPS_CAPA=9 taskset -c 0 ./bin/perf_main &
+    PERF_NIC_LINK_BW=100000 PERF_NIC_MSG_RATE=12400  PERF_NIC_QPS_CAPA=9 PERF_MSEN_QP_LIMIT=1 PERF_MAX_SIM_BTENANT_NUM=1 taskset -c 0 ./bin/perf_main &
     sleep 3
    
   fi

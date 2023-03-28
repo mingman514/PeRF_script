@@ -8,7 +8,7 @@ cp ./ib_* $CUR/bin
 
 if [ $MODE -eq 1 ]; then
 pkill pacer
-  cd $CUR/../Justitia/rdma_pacer
+  cd $CUR/../perf/Justitia/rdma_pacer
   make clean && make
   cp pacer $CUR/bin
 fi

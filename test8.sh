@@ -47,7 +47,7 @@ do
 
     for (( i=0; i<$LAT_TEST_ITER; i++));
     do 
-      run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_0_lat"
+      run_lat.sh $OP "-m $MTU" $CORE_START >> "$LOG_PATH/${OP}_${MTU}_0_lat"
       sleep 1
     done
 
@@ -61,7 +61,7 @@ do
     sleep 5
     for (( i=0; i<$LAT_TEST_ITER; i++));
     do 
-      run_lat.sh $OP "-m $MTU" $CORE_START 1 >> "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
+      run_lat.sh $OP "-m $MTU" $CORE_START >> "$LOG_PATH/${OP}_${MTU}_${QP_NUM}_lat"
       sleep 1
     done
   
