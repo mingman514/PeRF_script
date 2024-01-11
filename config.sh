@@ -1,10 +1,10 @@
 export BASE_DIR=$(pwd)
 export LAT_TEST_ITER=1
-export SERVER_IP=10.0.103.2
+export SERVER_IP=10.0.203.2
 export IS_CLIENT=1
 #export IS_CLIENT=0
 export DEV=mlx5_0
-export MODE=2 # Default: 0  Justitia: 1  PERF: 2
+export MODE=0 # Default: 0  Justitia: 1  PERF: 2
 
 
 
@@ -22,7 +22,7 @@ unset LD_LIBRARY_PATH
 unset \
     PERF_ENABLE PERF_CHUNK_SIZE PERF_DUMMY_FACTOR \
     DUMMY_FACTOR_2 PERF_READ_PORT  PERF_IB_PORT \
-    PERF_GIDX TB_TARGET_RATE PERF_IS_SERVER
+    PERF_GIDX TB_TARGET_RATE PERF_IS_SERVER PERF_REMOTE_IP
 
 if [ $MODE -eq 1 ]; then
   # Justitia
@@ -40,7 +40,8 @@ elif [ $MODE -eq 2 ]; then
     PERF_READ_PORT=2111 \
     PERF_IB_PORT=1 \
     PERF_GIDX=5 \
-    TB_TARGET_RATE=0
+    TB_TARGET_RATE=0 \
+    PERF_REMOTE_IP=$SERVER_IP
 
   if [ $IS_CLIENT -eq 1 ]; then
     export PERF_IS_SERVER=0
